@@ -12,11 +12,11 @@ class TopRatedPage extends StatefulWidget {
 
 class _TopRatedPageState extends State<TopRatedPage> {
   ApiServices apiServices = ApiServices();
-  List<Movie> movies = [];
+  late Future<List<Movie>> movies;
 
   @override
   void initState() {
-    movies = apiServices.getMovies();
+    movies = apiServices.getFeatureMovies();
     super.initState();
   }
 
@@ -26,10 +26,14 @@ class _TopRatedPageState extends State<TopRatedPage> {
         appBar: AppBar(
           title: const Text('Top Hated Movies'),
         ),
-        body: ListView.builder(
-            itemCount: movies.length,
-            itemBuilder: (context, index) {
-              return TopHatedMovie(movie: movies[index]);
-            }));
+        body: Builder(
+          builder: (context) {
+            return ListView.builder(
+                itemCount: movies.length,
+                itemBuilder: (context, index) {
+                  return TopHatedMovie(movie: movies[index]);
+                });
+          }
+        ));
   }
 }

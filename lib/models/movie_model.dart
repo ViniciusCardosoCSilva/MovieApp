@@ -47,4 +47,6 @@ class Movie {
         voteAverage: json["vote_average"]?.toDouble() ?? 0,
         voteCount: json["vote_count"] ?? 0,
       );
+
+  get rating => null;
 }
