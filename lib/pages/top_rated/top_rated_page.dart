@@ -26,12 +26,18 @@ class _TopRatedPageState extends State<TopRatedPage> {
         appBar: AppBar(
           title: const Text('Top Hated Movies'),
         ),
-        body: Builder(
-          builder: (context) {
+        body: FutureBuilder(
+          future: movies,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             return ListView.builder(
-                itemCount: movies.length,
+                itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
-                  return TopHatedMovie(movie: movies[index]);
+                  return TopHatedMovie(movie: snapshot.data![index]);
                 });
           }
         ));
